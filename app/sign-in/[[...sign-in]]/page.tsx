@@ -1,5 +1,2 @@
-import { SignIn } from "@clerk/nextjs";
-
-export default function SignInPage() {
-  return <main className="grid min-h-screen place-items-center p-6"><SignIn /></main>;
-}
+import { SignIn } from '@clerk/nextjs';
+export default function Page(){return <main className="auth-page"><a className="brand auth-brand" href="/"> <span className="brand-mark">c</span> clarity</a><div className="auth-shell"><div className="auth-copy"><div className="eyebrow">WELCOME BACK</div><h1>Your money.<br/><em>Your perspective.</em></h1><p>Pick up where you left off and keep moving toward a clearer financial future.</p></div><SignIn routing="path" path="/sign-in" signUpUrl="/sign-up"/></div></main>}
