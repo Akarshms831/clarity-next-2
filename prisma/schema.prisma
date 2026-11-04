@@ -1,0 +1,73 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model UserProfile {
+  id        String        @id
+  email     String?       @unique
+  name      String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+  salaries  Salary[]
+  budgets   Budget[]
+  categories Category[]
+  transactions Transaction[]
+}
+
+model Category {
+  id        String        @id @default(cuid())
+  userId    String
+  name      String
+  type      String        @default("expense")
+  color     String        @default("#9b8cff")
+  createdAt DateTime      @default(now())
+  user      UserProfile   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+  @@unique([userId, name, type])
+}
+
+model Salary {
+  id        String      @id @default(cuid())
+  userId    String
+  title     String      @default("Salary")
+  amount    Decimal     @db.Decimal(12, 2)
+  receivedAt DateTime   @default(now())
+  notes     String?
+  createdAt DateTime    @default(now())
+  user      UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Transaction {
+  id          String      @id @default(cuid())
+  userId      String
+  categoryId  String?
+  title       String
+  amount      Decimal     @db.Decimal(12, 2)
+  type        String      @default("expense")
+  paymentMethod String?
+  occurredAt  DateTime    @default(now())
+  notes       String?
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  user        UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category    Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  @@index([userId, occurredAt])
+}
+
+model Budget {
+  id        String      @id @default(cuid())
+  userId    String
+  category  String
+  amount    Decimal     @db.Decimal(12, 2)
+  month     Int
+  year      Int
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  user      UserProfile @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([userId, category, month, year])
+}
