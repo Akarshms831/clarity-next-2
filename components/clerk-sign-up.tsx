@@ -1,6 +1,14 @@
 'use client';
 
-import { SignUp } from '@clerk/nextjs';
+import dynamic from 'next/dynamic';
+
+const SignUp = dynamic(
+  () => import('@clerk/nextjs').then((mod) => mod.SignUp),
+  {
+    ssr: false,
+    loading: () => <div className="cl-loading" role="status">Loading secure sign-up…</div>,
+  },
+);
 
 export default function AppSignUp() {
   return (
