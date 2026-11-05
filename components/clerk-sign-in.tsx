@@ -4,6 +4,12 @@ import { FormEvent, useState } from 'react';
 import { useSignIn } from '@clerk/nextjs';
 import { useRouter } from 'next/navigation';
 
+type ClerkIssue = { longMessage?: string; message?: string };
+function messageFrom(error: unknown) {
+  const issues = (error as { errors?: ClerkIssue[] })?.errors;
+  return issues?.[0]?.longMessage || issues?.[0]?.message || (error instanceof Error ? error.message : 'Please try again.');
+}
+
 export default function AppSignIn() {
   const { isLoaded, signIn, setActive } = useSignIn();
   const router = useRouter();
@@ -14,21 +20,27 @@ export default function AppSignIn() {
 
   async function submit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (!isLoaded || !signIn) return;
-    setBusy(true);
     setError('');
+    if (!isLoaded || !signIn) {
+      setError('Secure sign-in is still loading. Please wait a moment and try again.');
+      return;
+    }
+    setBusy(true);
     try {
       const result = await signIn.create({ identifier: email.trim(), password });
       if (result.status === 'complete' && result.createdSessionId) {
         await setActive({ session: result.createdSessionId });
         router.replace('/dashboard');
         router.refresh();
+        return;
+      }
+      if (result.status === 'needs_second_factor') {
+        setError('This account requires an additional verification step. Contact the site administrator to enable the matching verification method.');
       } else {
-        setError('Your account needs an additional verification step. Please use the verification option from your Clerk sign-in settings.');
+        setError('Sign-in needs an additional step that is not yet configured for this page.');
       }
     } catch (err) {
-      const clerkError = err as { errors?: Array<{ longMessage?: string; message?: string }> };
-      setError(clerkError.errors?.[0]?.longMessage || clerkError.errors?.[0]?.message || 'Unable to sign in. Please check your details and try again.');
+      setError(messageFrom(err));
     } finally {
       setBusy(false);
     }
@@ -47,13 +59,14 @@ export default function AppSignIn() {
             <input type="password" autoComplete="current-password" required value={password} onChange={e => setPassword(e.target.value)} placeholder="Enter your password" />
           </label>
           {error && <p role="alert" style={{ color: '#c34f58', fontSize: 12, lineHeight: 1.5, margin: 0 }}>{error}</p>}
-          <button className="button button-primary" type="submit" disabled={!isLoaded || busy} style={{ width: '100%', justifyContent: 'center' }}>
+          <button className="button button-primary" type="submit" disabled={busy} style={{ width: '100%', justifyContent: 'center', cursor: busy ? 'wait' : 'pointer' }}>
             {busy ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
         <p style={{ color: '#888b9b', fontSize: 12, textAlign: 'center', margin: '18px 0 0' }}>
           New to Clarity? <a href="/sign-up" style={{ color: '#7772df', fontWeight: 700 }}>Create an account</a>
         </p>
+        {!isLoaded && <p style={{ color: '#999', fontSize: 10, textAlign: 'center', marginTop: 12 }}>Connecting to secure sign-in…</p>}
       </div>
     </section>
   );
