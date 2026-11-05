@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import AppSignUp from '@/components/clerk-sign-up';
 
 export default function Page() {
@@ -12,7 +13,9 @@ export default function Page() {
           <h1>Build a better<br /><em>money rhythm.</em></h1>
           <p>Create your private workspace and bring a little more intention to everyday finances.</p>
         </div>
-        <AppSignUp />
+        <Suspense fallback={<div className="cl-rootBox" aria-label="Loading sign up">Loading secure sign-up…</div>}>
+          <AppSignUp />
+        </Suspense>
       </div>
     </main>
   );
