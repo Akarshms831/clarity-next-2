@@ -21,7 +21,7 @@ export default function AppSignUp() {
   const [busy, setBusy] = useState(false);
 
   async function finishIfComplete(status: string, sessionId?: string | null) {
-    if (status === 'complete' && sessionId) {
+    if (status === 'complete' && sessionId && setActive) {
       await setActive({ session: sessionId });
       router.replace('/dashboard');
       router.refresh();
