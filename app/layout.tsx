@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { ClerkProvider } from '@clerk/nextjs';
+import AppClerkProvider from '@/components/clerk-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -15,7 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <ClerkProvider proxyUrl="/__clerk">{children}</ClerkProvider>
+        <AppClerkProvider>{children}</AppClerkProvider>
       </body>
     </html>
   );
