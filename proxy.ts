@@ -7,26 +7,15 @@ const isPublicRoute = createRouteMatcher([
   '/api/health',
 ]);
 
-export default clerkMiddleware(
-  async (auth, req) => {
-    if (!isPublicRoute(req)) {
-      await auth.protect();
-    }
-  },
-  {
-    // The client is configured to use /__clerk. The proxy must be enabled
-    // here as well or ClerkJS cannot finish loading its sign-in resources.
-    frontendApiProxy: {
-      enabled: true,
-      path: '/__clerk',
-    },
-  },
-);
+export default clerkMiddleware(async (auth, req) => {
+  if (!isPublicRoute(req)) {
+    await auth.protect();
+  }
+});
 
 export const config = {
   matcher: [
     '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|png|gif|svg|woff2?|ico|webmanifest)).*)',
     '/(api|trpc)(.*)',
-    '/__clerk/(.*)',
   ],
 };
