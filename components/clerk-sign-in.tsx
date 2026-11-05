@@ -1,6 +1,14 @@
 'use client';
 
-import { SignIn } from '@clerk/nextjs';
+import dynamic from 'next/dynamic';
+
+const SignIn = dynamic(
+  () => import('@clerk/nextjs').then((mod) => mod.SignIn),
+  {
+    ssr: false,
+    loading: () => <div className="cl-loading" role="status">Loading secure sign-in…</div>,
+  },
+);
 
 export default function AppSignIn() {
   return (
