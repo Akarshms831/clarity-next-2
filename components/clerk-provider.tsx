@@ -9,5 +9,5 @@ const ClerkProviderClient = dynamic(
 );
 
 export default function AppClerkProvider({ children }: { children: ReactNode }) {
-  return <ClerkProviderClient proxyUrl="/__clerk">{children}</ClerkProviderClient>;
+  return <ClerkProviderClient>{children}</ClerkProviderClient>;
 }
