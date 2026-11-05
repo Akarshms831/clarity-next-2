@@ -1,13 +1,12 @@
 'use client';
 
-import dynamic from 'next/dynamic';
+import { ClerkProvider } from '@clerk/nextjs';
 import type { ReactNode } from 'react';
 
-const ClerkProviderClient = dynamic(
-  () => import('@clerk/nextjs').then((mod) => mod.ClerkProvider),
-  { ssr: false },
-);
-
 export default function AppClerkProvider({ children }: { children: ReactNode }) {
-  return <ClerkProviderClient>{children}</ClerkProviderClient>;
+  return (
+    <ClerkProvider proxyUrl="/__clerk">
+      {children}
+    </ClerkProvider>
+  );
 }
