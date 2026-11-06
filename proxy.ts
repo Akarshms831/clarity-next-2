@@ -7,11 +7,19 @@ const isPublicRoute = createRouteMatcher([
   '/api/health',
 ]);
 
-export default clerkMiddleware(async (auth, req) => {
-  if (!isPublicRoute(req)) {
-    await auth.protect();
-  }
-});
+export default clerkMiddleware(
+  async (auth, req) => {
+    if (!isPublicRoute(req)) {
+      await auth.protect();
+    }
+  },
+  {
+    frontendApiProxy: {
+      enabled: true,
+      path: '/__clerk',
+    },
+  },
+);
 
 export const config = {
   matcher: [
