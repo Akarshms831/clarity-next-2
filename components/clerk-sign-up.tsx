@@ -18,6 +18,7 @@ export default function AppSignUp() {
         path="/sign-up"
         signInUrl="/sign-in"
         forceRedirectUrl="/dashboard"
+        fallback={<div className="cl-loading" role="status">Connecting to secure sign-up…</div>}
         appearance={{
           elements: {
             rootBox: { width: '100%' },
