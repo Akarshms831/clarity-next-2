@@ -3,7 +3,7 @@ import { requireProfile, jsonError } from '@/lib/api';
 import { prisma } from '@/lib/prisma';
 export const runtime = 'nodejs';
 const defaults:Record<string,number>={'Food & Dining':4000,'Groceries':5000,'Transport':2500,'Bills & Utilities':3000,'Shopping':2500,'Health':1500,'Entertainment':1500,'Home':2000,'Travel':1000,'Education':1000,'Personal':1000,'Other':1000};
-const schema = z.object({name:z.string().trim().min(1).max(80),limitAmount:z.number().positive().finite(),monthKey:z.string().regex(/^\\d{4}-(0[1-9]|1[0-2])$/),categoryId:z.string().nullable().optional()});
+const schema = z.object({name:z.string().trim().min(1).max(80),limitAmount:z.number().positive().finite(),monthKey:z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),categoryId:z.string().nullable().optional()});
 export async function GET(request:Request){try{
  const profile=await requireProfile();const month=new URL(request.url).searchParams.get('month');
  const categories=await prisma.category.findMany({where:{userId:profile.id,kind:'expense'}});
