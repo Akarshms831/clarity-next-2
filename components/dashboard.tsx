@@ -37,9 +37,9 @@ export default function Dashboard({name,email}:{name:string;email:string}){
 
  const income=tx.filter(t=>t.kind==='income').reduce((a,t)=>a+t.amount,0);
  const expenses=tx.filter(t=>t.kind==='expense').reduce((a,t)=>a+t.amount,0);
- const salaryTotal=salary.reduce((a,s)=>a+Number(s.amount),0);
+ const salaryTotal=salary.length?Number([...salary].sort((a,b)=>new Date(b.payDate).getTime()-new Date(a.payDate).getTime())[0].amount):0;
  const net=income-expenses;
- const budgetTotal=budgets.reduce((a,b)=>a+Number(b.limitAmount),0);
+ const budgetTotal=Number(budgets.find(b=>!b.categoryId)?.limitAmount||0);
  const filtered=useMemo(()=>tx.filter(t=>(t.title+' '+t.category+' '+(t.paymentMode||'')+' '+(t.notes||'')).toLowerCase().includes(query.toLowerCase())),[tx,query]);
  const monthDays=new Date(Number(month.slice(0,4)),Number(month.slice(5,7)),0).getDate();
  const daily=Array.from({length:monthDays},(_,i)=>{const day=String(i+1).padStart(2,'0');const rows=tx.filter(t=>t.date===`${month}-${day}`&&t.kind==='expense');return {day:String(i+1),spend:rows.reduce((a,t)=>a+t.amount,0)}});
