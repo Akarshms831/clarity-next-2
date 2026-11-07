@@ -29,7 +29,11 @@ export async function POST(request: Request) {
     if (!parsed.success) return Response.json({ error: 'Invalid salary details.', details: parsed.error.flatten() }, { status: 422 });
     const data = parsed.data;
     const payDate = new Date(data.payDate);
-    const row = await prisma.salary.create({ data: { ...data, payDate, monthKey: monthKey(payDate), userId: profile.id } });
-    return Response.json(row, { status: 201 });
+    const key = monthKey(payDate);
+    const existing = await prisma.salary.findFirst({ where: { userId: profile.id, monthKey: key }, orderBy: { payDate: 'desc' } });
+    const row = existing
+      ? await prisma.salary.update({ where: { id: existing.id }, data: { ...data, payDate, monthKey: key } })
+      : await prisma.salary.create({ data: { ...data, payDate, monthKey: key, userId: profile.id } });
+    return Response.json(row, { status: existing ? 200 : 201 });
   } catch (error) { return jsonError(error); }
 }
