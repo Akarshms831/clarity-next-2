@@ -32,6 +32,9 @@ export async function POST(request: Request) {
     const key = monthKey(payDate);
     const existingBudget = await prisma.budget.findFirst({ where: { userId: profile.id, monthKey: key, categoryId: null } });
     if (existingBudget && Number(existingBudget.limitAmount) > data.amount) return Response.json({ error: 'Your existing monthly budget is higher than this salary. Lower the monthly budget first, then update your salary.' }, { status: 400 });
+    const categoryBudgets = await prisma.budget.findMany({ where: { userId: profile.id, monthKey: key, categoryId: { not: null } } });
+    const categoryTotal = categoryBudgets.reduce((sum, row) => sum + Number(row.limitAmount), 0);
+    if (categoryTotal > (existingBudget ? Number(existingBudget.limitAmount) : data.amount)) return Response.json({ error: 'Your combined category limits exceed this month’s available plan. Reduce category limits before updating salary.' }, { status: 400 });
     const existing = await prisma.salary.findFirst({ where: { userId: profile.id, monthKey: key }, orderBy: { payDate: 'desc' } });
     const row = existing
       ? await prisma.salary.update({ where: { id: existing.id }, data: { ...data, payDate, monthKey: key } })
