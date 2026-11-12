@@ -17,7 +17,14 @@ export async function PATCH(request: Request, { params }: Ctx) {
     const old = await prisma.salary.findFirst({ where: { id, userId: profile.id } });
     if (!old) return Response.json({ error: 'Salary record not found.' }, { status: 404 });
     const data = parsed.data; const payDate = data.payDate ? new Date(data.payDate) : old.payDate;
-    const row = await prisma.salary.update({ where: { id }, data: { ...data, payDate, monthKey: monthKey(payDate) } });
+    const targetMonth = monthKey(payDate);
+    const nextAmount = data.amount ?? Number(old.amount);
+    const overall = await prisma.budget.findFirst({ where: { userId: profile.id, monthKey: targetMonth, categoryId: null } });
+    if (overall && Number(overall.limitAmount) > nextAmount) return Response.json({ error: 'The monthly overall budget is higher than this salary. Lower the budget first.' }, { status: 400 });
+    const categoryBudgets = await prisma.budget.findMany({ where: { userId: profile.id, monthKey: targetMonth, categoryId: { not: null } } });
+    const categoryTotal = categoryBudgets.reduce((sum, row) => sum + Number(row.limitAmount), 0);
+    if (categoryTotal > (overall ? Number(overall.limitAmount) : nextAmount)) return Response.json({ error: 'Combined category limits exceed this month’s available plan. Reduce category limits first.' }, { status: 400 });
+    const row = await prisma.salary.update({ where: { id }, data: { ...data, payDate, monthKey: targetMonth } });
     return Response.json(row);
   } catch (error) { return jsonError(error); }
 }
