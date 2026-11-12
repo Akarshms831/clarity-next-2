@@ -34,6 +34,8 @@ export async function POST(request: Request) {
     const row = existing
       ? await prisma.salary.update({ where: { id: existing.id }, data: { ...data, payDate, monthKey: key } })
       : await prisma.salary.create({ data: { ...data, payDate, monthKey: key, userId: profile.id } });
+    const monthlyBudget = await prisma.budget.findFirst({ where: { userId: profile.id, monthKey: key, categoryId: null } });
+    if (!monthlyBudget) await prisma.budget.create({ data: { userId: profile.id, monthKey: key, name: 'Monthly budget', limitAmount: data.amount, categoryId: null } });
     return Response.json(row, { status: existing ? 200 : 201 });
   } catch (error) { return jsonError(error); }
 }
