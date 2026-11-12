@@ -185,3 +185,114 @@ td:first-child{color:#e0e9ed}
 .auth-shell .cl-rootBox{filter:drop-shadow(0 15px 45px #0005)}
 .auth-shell .cl-card{background:#102436;border:1px solid rgba(173,206,221,.18);color:#eaf1f4}
 @media(max-width:640px){.sidebar{background:#0c1a28;border-color:#263b4a}.topbar{background:rgba(12,26,40,.92)}.content{padding-top:20px}.page-heading h1{font-size:23px}.metric-card>strong{font-size:18px}.landing{padding:20px 18px}.hero{padding-top:70px}}
+
+
+/* Responsive layout pass — desktop, tablet, and small phones */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+body{min-width:320px}
+.app-shell,.main-area,.content,.dashboard-grid,.glass-panel{min-width:0}
+.main-area{width:auto;max-width:100%;min-width:0}
+.content{width:100%;max-width:1650px}
+.metric-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.dashboard-grid{grid-template-columns:minmax(0,1.55fr) minmax(320px,1fr)}
+.salary-plan-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.insight-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.category-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+.budget-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+.page-heading>div,.panel-head>div{min-width:0}
+.metric-card,.insight-card,.budget-card,.category-item{min-width:0}
+.metric-card>strong,.insight-card strong,.budget-card>strong{overflow-wrap:anywhere}
+.chart-box,.recharts-responsive-container{min-width:0;max-width:100%}
+.table-wrap{width:100%;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
+.table-wrap table{min-width:700px}
+button,input,select,textarea{max-width:100%}
+@media(min-width:901px) and (max-width:1200px){
+ .main-area{margin-left:260px;padding:12px 14px 30px}
+ .sidebar{width:230px}
+ .content{padding:0}
+ .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .dashboard-grid{grid-template-columns:minmax(0,1fr)}
+ .insight-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .category-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .topbar{gap:10px;padding:12px 14px}
+}
+@media(max-width:900px){
+ .sidebar{position:fixed;inset:8px auto 8px 8px;width:min(290px,calc(100vw - 54px));height:auto;max-height:calc(100dvh - 16px);overflow-y:auto;z-index:50;transform:translateX(calc(-100% - 20px))}
+ .sidebar.open{transform:translateX(0)}
+ .main-area{margin-left:0;width:100%;padding:10px 14px 40px}
+ .topbar{position:sticky;top:8px;z-index:30;display:flex;flex-wrap:nowrap;min-width:0}
+ .mobile-menu{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:11px;background:#ffffff0c}
+ .crumb{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+ .top-actions{min-width:0;flex:0 0 auto}
+ .content{padding:0;width:100%}
+ .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .dashboard-grid{grid-template-columns:minmax(0,1fr)}
+}
+@media(max-width:640px){
+ .main-area{padding:8px 10px 28px}
+ .topbar{gap:6px;padding:8px 9px;min-height:54px;border-radius:17px;margin-bottom:16px}
+ .crumb{font-size:10px;margin:0;flex:1}
+ .top-actions{gap:5px}
+ .month-control{gap:3px}
+ .month-control .icon-button{width:27px;height:30px;flex:0 0 27px}
+ .month-control .month-pill{padding:6px 7px;gap:4px;max-width:132px}
+ .month-control .month-pill input{width:91px;max-width:91px;font-size:11px}
+ .top-actions>.icon-button,.user-button{display:none}
+ .page-heading{align-items:center;gap:8px;margin-bottom:14px}
+ .page-heading h1{font-size:clamp(19px,5vw,23px);line-height:1.15;letter-spacing:-.7px}
+ .page-heading p{font-size:10px;line-height:1.45;max-width:235px}
+ .page-heading .eyebrow{font-size:7px}
+ .page-heading>.button{flex:0 0 auto;min-height:39px;padding:9px 11px;font-size:10px}
+ .metric-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ .metric-card{min-height:126px;padding:12px;border-radius:17px}
+ .metric-icon{margin-bottom:10px}
+ .metric-label{font-size:9px;line-height:1.35}
+ .metric-card>strong{font-size:clamp(15px,4vw,19px);letter-spacing:-.5px}
+ .metric-change{font-size:8px;line-height:1.35}
+ .dashboard-grid{gap:10px;margin-top:10px}
+ .cashflow-panel,.budget-panel,.transactions-panel{padding:15px 12px;border-radius:18px}
+ .panel-head{gap:9px}
+ .panel-head h3{font-size:12px}
+ .panel-head p{font-size:9px;line-height:1.4}
+ .chart-box{height:175px}
+ .budget-total{gap:8px;align-items:flex-end;flex-wrap:wrap}
+ .budget-total strong{font-size:20px}
+ .transactions-panel .panel-head{align-items:flex-start;flex-wrap:wrap}
+ .full-panel{padding:14px 11px;border-radius:18px}
+ .full-panel>.panel-head{gap:12px;flex-wrap:wrap}
+ .full-panel>.panel-head>.button{font-size:10px;padding:9px 11px}
+ .budget-cards,.category-grid,.insight-grid,.salary-plan-grid{grid-template-columns:minmax(0,1fr)}
+ .budget-card,.category-item,.insight-card{padding:15px}
+ .transaction-filters{display:grid;grid-template-columns:1fr 1fr;width:100%;gap:7px}
+ .transaction-filters .search-box{grid-column:1/-1;min-width:0;width:100%}
+ .transaction-filters .search-box input{width:100%;min-width:0}
+ .transaction-filters select{width:100%;min-width:0;max-width:none;font-size:11px}
+ .row-actions{width:100%;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}
+ .row-actions .button{min-width:0;white-space:nowrap;justify-content:center}
+ .salary-plan-grid .insight-card strong{font-size:21px}
+ .app-footer{gap:8px;flex-wrap:wrap;padding:18px 3px}
+ .modal-backdrop{align-items:flex-end;padding:8px}
+ .modal-card{width:100%;max-width:520px;max-height:calc(100dvh - 16px);overflow-y:auto;padding:18px 16px calc(18px + env(safe-area-inset-bottom));border-radius:22px}
+ .field-label input,.field-label select,.field-label textarea{font-size:16px;min-height:44px}
+}
+@media(max-width:380px){
+ .main-area{padding-left:7px;padding-right:7px}
+ .topbar{padding:7px}
+ .crumb{font-size:9px}
+ .month-control .month-pill{max-width:112px}
+ .month-control .month-pill input{width:75px;max-width:75px}
+ .page-heading h1{font-size:19px}
+ .page-heading p{max-width:190px}
+ .page-heading>.button{padding:8px}
+ .metric-card{padding:10px;min-height:120px}
+ .metric-card>strong{font-size:15px}
+ .metric-change{font-size:7px}
+ .transaction-filters{grid-template-columns:1fr}
+ .transaction-filters .search-box{grid-column:auto}
+}
+@media(hover:none){
+ .metric-card:hover,.insight-card:hover,.budget-card:hover,.category-item:hover{transform:none}
+}
+@supports(padding:max(0px)){
+ .main-area{padding-bottom:max(28px,env(safe-area-inset-bottom))}
+}
