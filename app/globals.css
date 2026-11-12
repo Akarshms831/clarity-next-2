@@ -65,3 +65,123 @@ th{color:#8498b8;border-color:#ffffff17}td{color:#b5c3dc;border-color:#ffffff12}
 .auth-page{background:transparent}.auth-copy h1,.auth-brand{color:#f2f6ff}.auth-copy h1 em{color:#83baff}.auth-copy p{color:#9aabc7}.auth-shell .cl-card{background:#17243af0;border:1px solid #ffffff20;color:#f0f5ff}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
 @media(max-width:900px){.sidebar{background:linear-gradient(155deg,rgba(26,37,60,.97),rgba(13,21,38,.96));box-shadow:0 20px 65px #000b}}
+
+
+/* CLARITY / AURORA — visual system refresh */
+:root{color-scheme:dark;--ink:#edf2f7;--muted:#8795a8;--violet:#a5f36d;--line:rgba(160,190,210,.13);--glass:rgba(17,29,43,.78)}
+*{box-sizing:border-box}
+html,body{color:#edf2f7;background:#07111d;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{background:radial-gradient(ellipse at 10% 0%,rgba(33,112,119,.22),transparent 34%),radial-gradient(ellipse at 100% 20%,rgba(88,102,177,.17),transparent 32%),linear-gradient(145deg,#07111d 0%,#0a1724 55%,#09121f 100%);background-attachment:fixed}
+.brand{color:#f1f6f8;letter-spacing:-1.3px;font-weight:760}
+.brand-mark{width:34px;height:34px;border-radius:12px;background:linear-gradient(145deg,#c1ff85,#61d9c0);box-shadow:0 7px 24px #65e5bc35;position:relative;font-size:0;overflow:hidden}
+.brand-mark:before,.brand-mark:after{content:"";position:absolute;background:#10222b;border-radius:4px;transform:rotate(42deg)}
+.brand-mark:before{width:8px;height:24px;left:10px;top:5px}
+.brand-mark:after{width:8px;height:16px;left:19px;top:9px;opacity:.78}
+.brand-mark>span{position:absolute;width:5px;height:5px;border-radius:50%;background:#10222b;right:7px;bottom:7px}
+.landing{max-width:1360px;padding:30px 5.5vw}
+.landing-nav,.topbar{border:1px solid rgba(169,199,215,.12);background:rgba(13,27,41,.72);backdrop-filter:blur(24px);border-radius:18px;padding:12px 18px}
+.landing-nav{border:0;background:transparent;padding:0}
+.button{border-radius:12px;transition:transform .2s,background .2s,border-color .2s}
+.button-primary{background:linear-gradient(120deg,#c4ff83,#72e0bd);color:#10231f;box-shadow:0 8px 28px #8cf0bd20;font-weight:800}
+.button-primary:hover{transform:translateY(-2px);box-shadow:0 12px 34px #8cf0bd35}
+.button-quiet{color:#c5d1db;background:rgba(19,36,52,.72);border:1px solid rgba(170,200,220,.16)}
+.hero h1{color:#f0f5f7;letter-spacing:-5px}
+.hero h1 em,.auth-copy h1 em{color:#b8f77b}
+.eyebrow{color:#b7f17b}
+.hero-copy,.trust-row,.landing-footer{color:#8fa0b2}
+.preview-window{background:rgba(13,27,41,.85);border:1px solid rgba(179,211,225,.16);box-shadow:0 35px 100px #0008,0 1px 0 #ffffff12 inset}
+.preview-top{border-color:#ffffff12}
+.preview-top>span{background:#476071}
+.preview-greeting h2,.preview-card strong,.chart-head,.preview-side>b{color:#eaf2f5}
+.preview-greeting small,.preview-card small,.chart-head small,.preview-card span,.preview-side>small{color:#8296a8}
+.preview-card,.preview-chart,.preview-side{background:rgba(29,48,64,.72);border:1px solid rgba(170,200,220,.1);box-shadow:none}
+.preview-card .positive{color:#9ce8bd}
+.bars i{background:linear-gradient(180deg,#c2ff82,#58d8c0)}
+.ring{background:conic-gradient(#b7f17b 0 76%,#253746 76%)}
+.ring:before{background:#172b39}
+.avatar{background:#c2ff83;color:#10231f}
+.preview-glow{background:#75e3bf38}
+.app-shell{padding:14px;gap:14px}
+.sidebar{background:rgba(12,26,40,.88);border:1px solid rgba(168,198,215,.12);border-radius:20px;box-shadow:0 18px 60px #0003;backdrop-filter:blur(28px)}
+.sidebar .brand{padding-bottom:36px}
+.workspace-label,.crumb,.page-heading p,.metric-label,.metric-change,.panel-head p,.app-footer,.sidebar .upgrade-card p{color:#8294a7}
+.nav-item{color:#91a2b3;border-radius:11px}
+.nav-item:hover{background:#1a3040;color:#dce8ec}
+.nav-item.active{background:linear-gradient(100deg,rgba(177,244,117,.17),rgba(94,218,190,.08));color:#c5fa8d;box-shadow:inset 2px 0 #baf77e}
+.nav-count{background:#263c45;color:#c6f58e}
+.upgrade-card{background:linear-gradient(140deg,rgba(184,245,122,.11),rgba(83,211,190,.06));border:1px solid rgba(177,238,158,.16)}
+.upgrade-card b{color:#dbe8e9}
+.upgrade-icon{color:#c2f883}
+.profile-mini{border-color:#263746}
+.profile-mini b{color:#e5edf0}
+.profile-mini small{color:#8294a7}
+.topbar{background:rgba(12,26,40,.78);border:1px solid rgba(168,198,215,.12);box-shadow:0 10px 35px #0002}
+.crumb b{color:#eaf1f4}
+.month-pill,.icon-button,.more-button,.select-pill,.search-box{background:#152a3a;border:1px solid rgba(168,198,215,.15);color:#b6c6d0}
+.month-pill input{color:#dce8ed;color-scheme:dark}
+.icon-button:hover,.more-button:hover{border-color:#9bdc9b;color:#c5f98c}
+.page-heading h1{color:#f0f5f7}
+.page-heading .eyebrow{color:#b8f17d}
+.glass-panel,.metric-card{background:linear-gradient(145deg,rgba(19,37,53,.94),rgba(12,27,42,.91));border:1px solid rgba(165,198,214,.12);box-shadow:0 14px 42px #0002,0 1px 0 #ffffff08 inset;backdrop-filter:blur(24px)}
+.metric-card{padding:19px}
+.metric-icon.purple{background:#2a3048;color:#b9a9ff}
+.metric-icon.green{background:#1b3b39;color:#8be2bd}
+.metric-icon.orange{background:#3b3028;color:#ffc18a}
+.metric-icon.blue{background:#203a4b;color:#8ed9e5}
+.metric-card>strong,.budget-total strong,.budget-card>strong,.insight-card strong{color:#f0f5f7}
+.metric-label{color:#91a5b5}
+.metric-change{color:#8ca0b0}
+.dashboard-grid{gap:14px}
+.panel-head h3{color:#edf4f5}
+.panel-head p{color:#8195a7}
+.select-pill{background:#1a3040}
+.chart-legend span{color:#9aabba}
+.legend-income{background:#b8f17d}.legend-spend{background:#61d9bd}
+.chart-box .recharts-cartesian-grid line{stroke:#2a3c4c}
+.budget-total small,.budget-line small,.budget-remaining{color:#8296a8}
+.budget-total>span{background:#2d3d37;color:#c3f58a}
+.budget-track,.mini-track{background:#263a48}
+.budget-track i{background:linear-gradient(90deg,#b8f17d,#56d9bd)}
+.budget-line>div:first-child{color:#c5d1d8}
+.mini-track i.purple{background:#a9e87d}.mini-track i.green{background:#5ed9bb}.mini-track i.orange{background:#e6a66d}.mini-track i.red{background:#ee858b}
+.text-link{color:#b9f17e}
+.text-link:hover{color:#e0ffb4}
+th{color:#8195a8;border-color:#263a49}
+td{color:#aebdc8;border-color:#203443}
+td:first-child{color:#e0e9ed}
+.tx-icon.income{background:#1b4038;color:#8be0b8}
+.tx-icon.expense{background:#3d3028;color:#ffc18a}
+.category-chip{background:#263847;color:#b4c3cd}
+.amount.income{color:#8be0b8}.amount.expense{color:#f1b28c}
+.budget-card,.category-item,.insight-card{background:rgba(26,47,64,.62);border:1px solid rgba(165,198,214,.12);border-radius:14px}
+.budget-card-top b,.category-item b{color:#e5edf0}
+.category-dot{background:#b8f17d}
+.dot-1{background:#5ed9bb}.dot-2{background:#efa76c}.dot-3{background:#e98692}.dot-4{background:#83b9eb}
+.insight-card small{color:#91a5b5}
+.insight-card span{color:#8da0af}
+.note-card{background:rgba(177,239,126,.08);border:1px solid rgba(177,239,126,.12);color:#bdf18a}
+.note-card>div b{color:#e0f1d1}
+.note-card p{color:#9aafa9}
+.app-footer{color:#758b9c}
+.secure-dot{background:#8fe0ae}
+.modal-backdrop{background:#020a12b8}
+.modal-card{background:#102436;border:1px solid rgba(173,206,221,.18);box-shadow:0 25px 90px #0009}
+.modal-head h3{color:#edf4f5}
+.modal-head p,.modal-note{color:#8ba0b0}
+.kind-switch{background:#1b3040}
+.kind-switch button{color:#91a5b5}
+.kind-switch button.selected{background:#2a3d4a;color:#ffc18a;box-shadow:0 2px 10px #0003}
+.kind-switch button.selected.income{color:#a8efc6}
+.field-label{color:#b5c5cf}
+.field-label input,.field-label select,.field-label textarea{background:#0b1c2a;border:1px solid #2a4050;color:#e3edf0;color-scheme:dark}
+.field-label input:focus,.field-label select:focus,.field-label textarea:focus{border-color:#9bdc9b;box-shadow:0 0 0 3px #a5ed7b18}
+.empty-state{color:#8399aa}
+.search-box input{color:#e5edf0}
+.transaction-filters select{background:#152a3a;border:1px solid #2a4050;color:#c4d1d8}
+.auth-page{background:transparent}
+.auth-brand{color:#edf4f5}
+.auth-copy h1{color:#edf4f5}
+.auth-copy p{color:#8fa2b2}
+.auth-shell .cl-rootBox{filter:drop-shadow(0 15px 45px #0005)}
+.auth-shell .cl-card{background:#102436;border:1px solid rgba(173,206,221,.18);color:#eaf1f4}
+@media(max-width:640px){.sidebar{background:#0c1a28;border-color:#263b4a}.topbar{background:rgba(12,26,40,.92)}.content{padding-top:20px}.page-heading h1{font-size:23px}.metric-card>strong{font-size:18px}.landing{padding:20px 18px}.hero{padding-top:70px}}
