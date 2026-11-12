@@ -37,7 +37,8 @@ model Salary {
   id          String   @id @default(cuid())
   userId      String
   title       String
-  amount      Decimal  @db.Decimal(14,2)
+  amount      Decimal  @db.Decimal(14,2) // Net take-home salary
+  grossAmount Decimal? @map("gross_amount") @db.Decimal(14,2)
   payDate     DateTime
   monthKey    String
   notes       String?
