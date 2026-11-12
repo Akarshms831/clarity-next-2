@@ -20,8 +20,16 @@ export async function POST(request:Request){try{
  const profile=await requireProfile();const parsed=schema.safeParse(await request.json());
  if(!parsed.success)return Response.json({error:'Invalid budget details.',details:parsed.error.flatten()},{status:422});
  const data=parsed.data;
- if(!data.categoryId){const salary=await prisma.salary.findFirst({where:{userId:profile.id,monthKey:data.monthKey}});if(salary&&data.limitAmount>Number(salary.amount))return Response.json({error:'The overall monthly budget cannot exceed your take-home salary.'},{status:400});const exists=await prisma.budget.findFirst({where:{userId:profile.id,monthKey:data.monthKey,categoryId:null}});if(exists)return Response.json({error:'An overall budget already exists for this month. Edit that budget instead.'},{status:409});}
- if(data.categoryId){const category=await prisma.category.findFirst({where:{id:data.categoryId,userId:profile.id,kind:'expense'}});if(!category)return Response.json({error:'Expense category not found for this account.'},{status:400});}
+ if(!data.categoryId){const salary=await prisma.salary.findFirst({where:{userId:profile.id,monthKey:data.monthKey}});if(!salary)return Response.json({error:'Record this month’s salary received after deductions before setting the overall budget.'},{status:400});if(data.limitAmount>Number(salary.amount))return Response.json({error:'The overall monthly budget cannot exceed your take-home salary.'},{status:400});const exists=await prisma.budget.findFirst({where:{userId:profile.id,monthKey:data.monthKey,categoryId:null}});if(exists)return Response.json({error:'An overall budget already exists for this month. Edit that budget instead.'},{status:409});}
+ if(data.categoryId){
+  const salary=await prisma.salary.findFirst({where:{userId:profile.id,monthKey:data.monthKey}});
+  if(!salary)return Response.json({error:'Record this month’s salary received after deductions before planning category limits.'},{status:400});
+  const overall=await prisma.budget.findFirst({where:{userId:profile.id,monthKey:data.monthKey,categoryId:null}});
+  const categoryRows=await prisma.budget.findMany({where:{userId:profile.id,monthKey:data.monthKey,categoryId:{not:null}}});
+  const planned=categoryRows.reduce((sum,row)=>sum+Number(row.limitAmount),0)+data.limitAmount;
+  const ceiling=overall?Number(overall.limitAmount):Number(salary.amount);
+  if(planned>ceiling)return Response.json({error:`Combined category limits cannot exceed this month’s ${overall?'overall budget':'salary received after deductions'} (${ceiling}).`},{status:400});
+  const category=await prisma.category.findFirst({where:{id:data.categoryId,userId:profile.id,kind:'expense'}});if(!category)return Response.json({error:'Expense category not found for this account.'},{status:400});}
  const row=await prisma.budget.create({data:{...data,userId:profile.id}});
  return Response.json(row,{status:201});
 }catch(error){return jsonError(error)}}
