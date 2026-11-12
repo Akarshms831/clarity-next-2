@@ -6,6 +6,7 @@ export const runtime = 'nodejs';
 const schema = z.object({
   title: z.string().trim().min(1).max(100),
   amount: z.number().positive().finite(),
+  grossAmount: z.number().positive().finite().nullable().optional(),
   payDate: z.string().datetime(),
   notes: z.string().max(1000).nullable().optional(),
 });
@@ -28,6 +29,7 @@ export async function POST(request: Request) {
     const parsed = schema.safeParse(await request.json());
     if (!parsed.success) return Response.json({ error: 'Invalid salary details.', details: parsed.error.flatten() }, { status: 422 });
     const data = parsed.data;
+    if (data.grossAmount != null && data.grossAmount < data.amount) return Response.json({ error: 'Gross salary cannot be lower than salary received after deductions.' }, { status: 400 });
     const payDate = new Date(data.payDate);
     const key = monthKey(payDate);
     const existingBudget = await prisma.budget.findFirst({ where: { userId: profile.id, monthKey: key, categoryId: null } });
