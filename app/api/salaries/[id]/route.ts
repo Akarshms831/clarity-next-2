@@ -6,6 +6,7 @@ type Ctx = { params: Promise<{ id: string }> };
 const schema = z.object({
   title: z.string().trim().min(1).max(100).optional(),
   amount: z.number().positive().finite().optional(),
+  grossAmount: z.number().positive().finite().nullable().optional(),
   payDate: z.string().datetime().optional(),
   notes: z.string().max(1000).nullable().optional(),
 });
@@ -19,6 +20,8 @@ export async function PATCH(request: Request, { params }: Ctx) {
     const data = parsed.data; const payDate = data.payDate ? new Date(data.payDate) : old.payDate;
     const targetMonth = monthKey(payDate);
     const nextAmount = data.amount ?? Number(old.amount);
+    const nextGross = data.grossAmount === undefined ? (old.grossAmount == null ? null : Number(old.grossAmount)) : data.grossAmount;
+    if (nextGross != null && nextGross < nextAmount) return Response.json({ error: 'Gross salary cannot be lower than salary received after deductions.' }, { status: 400 });
     const overall = await prisma.budget.findFirst({ where: { userId: profile.id, monthKey: targetMonth, categoryId: null } });
     if (overall && Number(overall.limitAmount) > nextAmount) return Response.json({ error: 'The monthly overall budget is higher than this salary. Lower the budget first.' }, { status: 400 });
     const categoryBudgets = await prisma.budget.findMany({ where: { userId: profile.id, monthKey: targetMonth, categoryId: { not: null } } });
