@@ -3,8 +3,8 @@ import AppClerkProvider from '@/components/clerk-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Clarity — Personal Finance',
-  description: 'A calmer, clearer way to manage your money.',
+  title: 'Clarity — Money, in focus',
+  description: 'A sharper, calmer workspace for your salary, spending and monthly plan.',
 };
 
 export default function RootLayout({
