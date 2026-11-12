@@ -11,6 +11,8 @@ export async function PATCH(request: Request, { params }: Ctx) {
     const old = await prisma.budget.findFirst({ where: { id, userId: profile.id } });
     if (!old) return Response.json({ error: 'Budget not found.' }, { status: 404 });
     const data = parsed.data;
+    const targetMonth=data.monthKey??old.monthKey;const targetCategory=data.categoryId===undefined?old.categoryId:data.categoryId;
+    if(targetCategory===null){const salary=await prisma.salary.findFirst({where:{userId:profile.id,monthKey:targetMonth}});const targetAmount=data.limitAmount??Number(old.limitAmount);if(salary&&targetAmount>Number(salary.amount))return Response.json({error:'The overall monthly budget cannot exceed your take-home salary.'},{status:400});const duplicate=await prisma.budget.findFirst({where:{userId:profile.id,monthKey:targetMonth,categoryId:null,NOT:{id}}});if(duplicate)return Response.json({error:'An overall budget already exists for this month.'},{status:409});}
     if (data.categoryId) {
       const category = await prisma.category.findFirst({ where: { id: data.categoryId, userId: profile.id, kind: 'expense' } });
       if (!category) return Response.json({ error: 'Expense category not found for this account.' }, { status: 400 });
