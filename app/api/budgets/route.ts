@@ -63,7 +63,7 @@ export async function POST(request: Request) {
         .reduce((sum, row) => sum + Number(row.limitAmount), 0) + data.limitAmount;
       if (planned > ceiling) return Response.json({ error: `Combined category limits cannot exceed this month’s ${overall ? 'overall budget' : 'salary received after deductions'} (${ceiling}).` }, { status: 400 });
       if (existing) {
-        const updated = await prisma.budget.update({ where: { id: existing.id }, data: { name: data.name, limitAmount: data.limitAmount, categoryId: category.id } });
+        const updated = await prisma.budget.update({ where: { id: existing.id }, data: { name: category.name, limitAmount: data.limitAmount, categoryId: category.id } });
         return Response.json(updated);
       }
     } else {
@@ -74,7 +74,7 @@ export async function POST(request: Request) {
       if (categoryTotal > data.limitAmount) return Response.json({ error: 'The overall budget cannot be lower than the combined category limits. Reduce category limits first.' }, { status: 400 });
     }
 
-    const row = await prisma.budget.create({ data: { ...data, userId: profile.id } });
+    const row = await prisma.budget.create({ data: { ...data, ...(data.categoryId ? { name: context.categories.find(category => category.id === data.categoryId)!.name } : {}), userId: profile.id } });
     return Response.json(row, { status: 201 });
   } catch (error) { return jsonError(error); }
 }
