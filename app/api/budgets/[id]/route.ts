@@ -25,7 +25,7 @@ export async function PATCH(request: Request, { params }: Ctx) {
       prisma.budget.findMany({ where: { userId: profile.id, monthKey: targetMonth } }),
       prisma.salary.findFirst({ where: { userId: profile.id, monthKey: targetMonth }, orderBy: { payDate: 'desc' } }),
     ]);
-    const categoryByName = new Map(categories.map(category => [category.name.trim().toLowerCase(), category]));
+    const categoryByName = new Map(categories.map(category => [category.name.trim().toLowerCase(), category] as const));
     const categoryFor = (row: (typeof rows)[number]) =>
       row.categoryId ? categories.find(category => category.id === row.categoryId) : categoryByName.get(row.name.trim().toLowerCase());
     const categoryRows = rows.filter(row => !!categoryFor(row));
