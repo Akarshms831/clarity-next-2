@@ -54,7 +54,7 @@ export async function PATCH(request: Request, { params }: Ctx) {
 
     return Response.json(await prisma.budget.update({
       where: { id },
-      data: { ...data, monthKey: targetMonth, categoryId: targetCategoryId },
+      data: { ...data, ...(targetCategoryId ? { name: categories.find(category => category.id === targetCategoryId)!.name } : {}), monthKey: targetMonth, categoryId: targetCategoryId },
     }));
   } catch (error) { return jsonError(error); }
 }
