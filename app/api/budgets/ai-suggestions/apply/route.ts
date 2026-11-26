@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 export const runtime = 'nodejs';
 
 const schema = z.object({
-  monthKey: z.string().regex(/^\\d{4}-(0[1-9]|1[0-2])$/),
+  monthKey: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
   totalBudget: z.number().positive().finite(),
   allocations: z.array(z.object({ categoryId: z.string().min(1), amount: z.number().nonnegative().finite() })).min(1),
 });
