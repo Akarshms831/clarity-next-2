@@ -500,3 +500,5 @@ tbody tr:hover{background:#ffffff05}
  .metric-card>strong{font-size:15px}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+.form-error{margin:0 0 14px;padding:12px 13px;border:1px solid rgba(255,126,126,.32);border-radius:12px;background:rgba(180,54,54,.13);color:#ffb4ad;font-size:12px;line-height:1.5}.save-button:disabled{opacity:.58;cursor:not-allowed;transform:none}
