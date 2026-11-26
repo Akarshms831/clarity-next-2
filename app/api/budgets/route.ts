@@ -16,7 +16,7 @@ async function getBudgetContext(userId: string, monthKey: string) {
     prisma.budget.findMany({ where: { userId, monthKey } }),
     prisma.salary.findFirst({ where: { userId, monthKey }, orderBy: { payDate: 'desc' } }),
   ]);
-  const categoryByName = new Map(categories.map(category => [category.name.trim().toLowerCase(), category]));
+  const categoryByName = new Map(categories.map(category => [category.name.trim().toLowerCase(), category] as const));
   const categoryFor = (row: (typeof rows)[number]) =>
     row.categoryId ? categories.find(category => category.id === row.categoryId) : categoryByName.get(row.name.trim().toLowerCase());
   const categoryRows = rows.filter(row => !!categoryFor(row));
@@ -33,7 +33,7 @@ export async function GET(request: Request) {
       orderBy: [{ monthKey: 'desc' }, { name: 'asc' }],
     });
     const categories = await prisma.category.findMany({ where: { userId: profile.id, kind: 'expense' } });
-    const categoryByName = new Map(categories.map(category => [category.name.trim().toLowerCase(), category.id]));
+    const categoryByName = new Map(categories.map(category => [category.name.trim().toLowerCase(), category.id] as const));
     // Older rows may have a missing categoryId. Resolve them in the response without
     // mutating financial records, so category limits are not mistaken for overall budgets.
     return Response.json(rows.map(row => ({
