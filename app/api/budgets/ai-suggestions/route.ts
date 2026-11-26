@@ -4,7 +4,7 @@ import { prisma } from '@/lib/prisma';
 export const runtime = 'nodejs';
 
 const requestSchema = z.object({
-  monthKey: z.string().regex(/^\\d{4}-(0[1-9]|1[0-2])$/),
+  monthKey: z.string().regex(/^\d{4}-(0[1-9]|1[0-2])$/),
   totalBudget: z.number().positive().finite(),
   months: z.union([z.literal(3), z.literal(6)]).default(6),
 });
